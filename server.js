@@ -3,6 +3,8 @@ const app = express();
 const port = 4000;
 const { query } = require("./database");
 const { RecipeInventory } = require("./models");
+const sequelize = require('../config/connection');
+
 require("dotenv").config();
 
 app.use((req, res, next) => {

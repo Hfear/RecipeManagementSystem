@@ -7,6 +7,7 @@ Recipe.init(
   {
     title: {
         type: DataTypes.TEXT,
+        primaryKey: true,
         allowNull: false,
       },
       description: {
@@ -33,9 +34,10 @@ Recipe.init(
   {
     sequelize,
     timestamps: false,
-    freezeTableName: true,
+    // freezeTableName: true,
     underscored: true,
     modelName: 'Recipe',
+    tableName: 'Recipes'
   }
 );
 
