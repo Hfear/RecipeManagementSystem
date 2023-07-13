@@ -18,9 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     updated_at: DataTypes.DATE
   }, {
     sequelize,
-    modelName: 'RecipeInventory',
-    modelName: 'RecipeManagement',
-    tableName: 'recipe_management',// explicit snake cased table name
+    modelName: 'Recipes',
+    tableName: 'recipes',// explicit snake cased table name
     underscored: true // this option converts camelCased columns to snake_case in the DB
   
   });

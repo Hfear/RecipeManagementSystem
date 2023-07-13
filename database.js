@@ -9,4 +9,32 @@ const pool = new Pool({
   port: process.env.DB_PORT
 });
 
-module.exports = pool;
+const createTableQuery = `
+  CREATE TABLE IF NOT EXISTS recipes (
+    id SERIAL PRIMARY KEY,
+    title TEXT,
+    description TEXT,
+    ingredients TEXT,
+    instructions TEXT,
+    created_at DATE,
+    updated_at DATE
+  );
+`;
+
+const createTable = async () => {
+  try {
+    await pool.query(createTableQuery);
+    console.log("Table created successfully");
+  } catch (err) {
+    console.error("Error executing query", err.stack);
+  }
+};
+
+createTable();
+
+module.exports = {
+    query: (text, params, callback) => {
+      console.log("QUERY:", text, params || "");
+      return pool.query(text, params, callback);
+    },
+  };
