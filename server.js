@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
 const port = 4000;
-const { query } = require("./database");
-const { RecipeInventory } = require("./models");
-const sequelize = require('../config/connection');
-
+// const { query } = require("./database");
+const { Recipe } = require("./models");
+const{g} = require("./models/index");
+// const sequelize = require('../config/connection');
 require("dotenv").config();
+
 
 app.use((req, res, next) => {
     console.log(`Request: ${req.method} ${req.originalUrl}`);
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 
 app.post("/recipes", async (req, res) => {
     try {
-      const newRecipe = await RecipeInventory.create(req.body);
+      const newRecipe = await Recipe.create(req.body);
   
       res.status(201).json(newRecipe);
     } catch (err) {
@@ -30,7 +31,7 @@ app.post("/recipes", async (req, res) => {
 
 app.get("/recipes", async (req, res) => {
     try {
-      const allRecipes = await RecipeInventory.findAll();
+      const allRecipes = await Recipe.findAll();
   
       res.status(200).json(allRecipes);
     } catch (err) {
@@ -44,7 +45,7 @@ app.get("/recipes/:id", async (req, res) => {
     const recipeId = parseInt(req.params.id, 10);
   
     try {
-      const recipe = await RecipeInventory.findOne({ where: { id: recipeId } });
+      const recipe = await Recipe.findOne({ where: { id: recipeId } });
   
       if (recipe) {
         res.status(200).json(recipe);
@@ -62,7 +63,7 @@ app.patch("/recipes/:id", async (req, res) => {
     const recipeId = parseInt(req.params.id, 10);
   
     try {
-      const [numberOfAffectedRows, affectedRows] = await RecipeInventory.update(req.body, { where: { id: recipeId }, returning: true });
+      const [numberOfAffectedRows, affectedRows] = await Recipe.update(req.body, { where: { id: recipeId }, returning: true });
   
       if (numberOfAffectedRows > 0) {
         res.status(200).json(affectedRows[0]);
@@ -80,7 +81,7 @@ app.delete("/recipes/:id", async (req, res) => {
     const recipeId = parseInt(req.params.id, 10);
   
     try {
-      const deleteOp = await RecipeInventory.destroy({ where: { id: recipeId } });
+      const deleteOp = await Recipe.destroy({ where: { id: recipeId } });
   
       if (deleteOp > 0) {
         res.status(200).send({ message: "recipe deleted successfully" });
@@ -95,5 +96,5 @@ app.delete("/recipes/:id", async (req, res) => {
 
 
   app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+    console.log(`Server is running at http://localhost:${port} .....` + g);
   });

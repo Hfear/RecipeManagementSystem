@@ -1,7 +1,11 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/connection');
+// const sequelize = require('../config/config');
 
-class Recipe extends Model {}
+module.exports = (sequelize, DataTypes) => {
+  class Recipe extends Model {
+      static associate(models) {
+      }
+  };
 
 Recipe.init(
   {
@@ -37,8 +41,10 @@ Recipe.init(
     // freezeTableName: true,
     underscored: true,
     modelName: 'Recipe',
-    tableName: 'Recipes'
+    tableName: 'recipes'
   }
 );
+return Recipe; 
+}
 
-module.exports = Recipe;
+// module.exports = Recipe;
